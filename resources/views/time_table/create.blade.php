@@ -33,47 +33,47 @@
             <th>Date</th>
             <th>session</th>
             <th>subcode</th>
-            <th>subject</th> 
-            <th>graduate</th>
             <th>action</th>
         </tr>
+        
         </thead>
-        @foreach($dates as $date=>$time_tables)
+     @foreach($time_tables as $date=>$sessions)
+          <?php 
+               $sessions = $sessions->groupby('session');
+              
+             ?>  
+        @foreach($sessions as $session=>$subcodes)
         <tr>
             
             <td class="align-middle"><b>{{$date}}<b> </td>
-           <td class="align-middle">
-            @foreach($time_tables as $time_table)
-            <b>{{$time_tables[0]->session}}</b><br>
-            @endforeach
-        </td>
-            <td class="align-middle">
-                @foreach($time_tables as $time_table)
-                <b>{{$time_table->subcode}}</b><br>
+            
+             
+             
+             <td class="align-middle">
+            <b>{{$session}}</b> 
+           
+           </td>
+           
+            <td class="align-middle"> 
+                @foreach($subcodes as $subcode)
+                <b>{{$subcode->subcode}}</b><br>
                 @endforeach
             </td>
-            <td class="align-middle" id="subject">
-                @foreach($time_tables as $time_table)
-                <b>{{$time_table->title_of_the_paper}}</b><br>
-                @endforeach
+             
+              
+              
+             <td class="align-middle"   style="text-align:center;">
+             <a class="btn btn-info"   onclick='create_hall("{{$date}}","{{$session}}")' id="{{$date}}{{$session}}" >Create Hall</a>
+             <div class="{{$date}}" >
+              <span class="visually-hidden">Loading...</span>
+             </div>
             </td>
-            <td class="align-middle">
-                @foreach($time_tables as $time_table)
-                <b>{{$time_table->graduate}}</b><br>
-                @endforeach
-                </td>
-                @php
-                $disable = false;
-                @endphp
-                @if($disable != true)
-                <td class="align-middle"   style="text-align:center;">
-                <a class="btn btn-info"   onclick='create_hall("{{$date}}")' id="{{$date}}" >Create Hall</a>
-                </td>
-                @endif
+            
              
         </tr>
-       
         @endforeach
+    @endforeach
+        
         <tbody>
 
        
@@ -95,6 +95,7 @@
         datatype:'json',
         success: function(date){
            len = date.length;
+           
           for(var i = 0;i < len ; i++){
             $("#"+date[i]).html("Hall Created").css({'background-color':'green','font-size':'20px'}).removeAttr("onclick");
           }
@@ -106,19 +107,26 @@
    });
 
    
-   function create_hall(date){
-    $("#"+date).removeAttr("onclick");
+   function create_hall(date,session){
+    
+    $("#"+date).removeAttr("onclick").html("hi");
+    $("."+date).addClass("spinner-border text-primary").addClass("status");
     $.ajax({
         url:'create_hall',
         type:"post",
         data:   { 
-            "date":date
+            "date":date,
+            "session" : session
         },
         datatype:'json',
         success: function(res){
             var date = res.date;
             
-           $("#"+date).html("Hall Created").css({'background-color':'green','font-size':'20px'}).removeAttr("onclick");
+           $("#"+date).html("Hall Created")
+                      .css({'background-color':'green','font-size':'20px'})
+                      .removeAttr("onclick")
+           $("."+date).removeClass("spinner-border text-primary")
+                      .removeClass("status");
            alert("Hall was created!");
         },
         error: function(err){

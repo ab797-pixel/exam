@@ -29,8 +29,10 @@ class TimeTableController extends Controller
     public function index(){
 
         $dates = TimeTable::all();
-        $dates = $dates -> groupby('date');
-        return view('time_table.create',compact('dates'));
+        $time_tables = $dates -> groupby('date');
+        
+        return view('time_table.create',compact('time_tables'));
+       //return $time_tables;
        // return  response()->json($dates);
                   
                  

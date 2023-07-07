@@ -41,16 +41,19 @@
             <th><b>STUDENT TOTAL</b></th>
         </tr>
         
-   
+   <?php $i=1 ?>
         @foreach($students as $student)
+
+
+
         <tr style="text-align=center">
-          <td><b></b></td>
+          <td><b>{{$i}}</b></td>
            <td><b>{{$student->degree}}/{{$student->subject}}/{{$student->subcode}}</b></td> 
           <td><b>{{$student->reg_no}}</b></td>
           <td><b></b></td>
           <td><b></b></td>
         </tr>
-          
+         <?php $i++ ?>
         @endforeach
        
         <!-- <div class="row">

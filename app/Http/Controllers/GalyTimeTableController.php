@@ -46,11 +46,13 @@ class GalyTimeTableController extends Controller
         
     }
     public function entranceHall($date){
-        $tables = GalyTimeTable::where('date','=',$date)->get()->groupby('hall_number');
-        foreach($tables as $hall=>$depts){
-            $depts = $depts->groupby('subject');
-            foreach($depts as $dept=>$students){
-                $entrance_tables[$hall][$dept]=array(
+        $subjects = GalyTimeTable::where('date','=',$date)->get()->groupby('subject');
+        $session = GalyTimeTable::where('date','=',$date)->pluck('session');
+        
+        foreach($subjects as $subject=>$halls){
+            $halls = $halls->groupby('hall_number');
+            foreach($halls as $hall=>$students){
+                $entrance_tables[$subject][$hall]=array(
                    "first" => $first_reg=$students->first(),
                    "last" => $last_reg=$students->last(),
                 );
@@ -58,10 +60,13 @@ class GalyTimeTableController extends Controller
             } 
         
     }
-   // return view('hall.entrance_hall',compact('entrance_tables'));
-   return $entrance_tables;
+
+   return view('hall.entrance_hall',compact('entrance_tables','date','session'));
+   //return $entrance_tables;
+   
 }
     public function attandanceHall($date){
-        return "this is attendance link blade";
+        $short_tables= GalyTimeTable::where('date','=',$date)->get()->groupby('hall_number');
+         return view('hall.attandance',compact('short_tables'));
     }
 }

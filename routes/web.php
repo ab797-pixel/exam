@@ -41,13 +41,13 @@ Route::get('short_hall/{date}', [\App\Http\Controllers\GalyTimeTableController::
 Route::get('entrance_hall/{date}', [\App\Http\Controllers\GalyTimeTableController::class,'entranceHall'])->name('entrance_hall');
 Route::get('attandance/{date}', [\App\Http\Controllers\GalyTimeTableController::class,'attandanceHall'])->name('attandance');
 
-
+//Route::view('ehall','ehall/create');
 
 //Route::view('time_table','time_table/create');
 
 
 
-Route::view('ehall','ehall/create');
+//Route::view('entrance_hall/{date}','hall/entrance_hall');
 //Route::view('hall','hall/create');
 
 
