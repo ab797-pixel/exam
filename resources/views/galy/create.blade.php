@@ -18,7 +18,7 @@
 			<label for="file">select galy</label>
 			<input id="file" type="file" name="file"   class="form-control">
 		<div style="margin-top:10px;">
-    <button class="btn btn-success" style="margin-right:30px;">Import File</button>
+    <button class="btn btn-success" style="margin-right:30px;" onclick ='galiesImport()'>Import File</button>
     <a class="btn btn-info" href="{{ route('export-galy') }}"style="margin-left:30px">Export File</a>  
     </div>	
 	</form>
@@ -66,15 +66,15 @@
            
         </tr>
         @endforeach
-       
-    
-   
-       
-       </tbody>
-       
-
-    
-   
-    
+        </tbody>   
 </table>
+<script type="text/javascript">
+    
+    $(document).ready(function(){
+        function galiesImport(date,session){
+            alert("hi");
+        }
+    });
+    
+</script>
 @endsection

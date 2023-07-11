@@ -40,37 +40,10 @@
             <th>Session</th>
 
     </tr>
-    <tr style="text-align:center">
-            <th>{{$date}}</th>
-            <th></th>
-            <th></th>
-            <th>{{$session}}</th>
-        </tr>
-        <tr style="text-align:center">
-            <td><b>DEGREE \ CODE</b></td>
-            <td colspan="2"><b>REGISTER NUMBER OF ALLOTED CANDIDATES</b></td>
-            
-            <td><b>HALL   NUMBER</b></td>
-        </tr>
-        
-        @foreach($entrance_tables as $subject=>$halls)
-        @foreach($halls as $hall)
-        <tr style="text-align:center;">
-            <td><b>{{$hall['first']->subject}}\{{$hall['first']->subcode}}\{{$hall['first']->degree}}</b></td>
-            <td colspan="2"><b>{{$hall['first']->reg_no}} TO {{$hall['last']->reg_no}}</b></td>
-            
-            <td><b>{{$hall['first']->hall_number}}</b></td>
-        </tr>
-        
-        @endforeach
-        @endforeach
-      
-        
- 
-        
-
     
-
+        
+     
+      
        
 </table> 
 

@@ -37,7 +37,7 @@ class TimeTableController extends Controller
                   
                  
     }
-    public function createHall(Request $request){
+    public function createHall_old(Request $request){
        $date = $request->date;
        
         /*
@@ -55,6 +55,7 @@ class TimeTableController extends Controller
         $i = 1;
         $a = 1;
         $halls = 0;
+        $first = [];
         $time_tables = TimeTable::where('date','=',$date)->get();
         
         
@@ -66,28 +67,22 @@ class TimeTableController extends Controller
         
         $fraction = $halls - floor($halls);
        
-        if($fraction < 0.5){
-           $halls = $halls + 1;
-        }
+      //   if($fraction < 0.5){
+      //      $halls = $halls + 1;
+      //   }
         
         foreach($subcodes as $subcode){
             
            $galies = Galy::where('subcode','=',$subcode) 
                  
                   ->get();
-        //   $halls = $galies->count();
-        //   return $halls;
-        // $fraction = $halls - floor($halls);
        
-        // if($fraction < 0.5){
-        //    $halls = $halls + 1;
-        // }
                   
    
        
        
        
-               //  $depts= $galies ->groupby('subject');
+               
           $degrees= $galies ->groupby('degree');
            
              foreach($degrees as $degree => $depts ){
@@ -97,8 +92,7 @@ class TimeTableController extends Controller
                      $students = $group_students->sortBy('reg_no');
                    
                    foreach($students as $student){
-                      $session = TimeTable::where('date','=',$date)->where('subcode','=',$subcode)->pluck('session');
-                      
+                     array_push($first,$student); 
                      $galy_time_table = new GalyTimeTable();
                      if($i > round($halls)){
                         $i = 1;    
@@ -107,45 +101,96 @@ class TimeTableController extends Controller
                      $a++;
                      if($a > 15){
                        $i++;
+                       
                        $a = 1;
                      }
                      
                   
                      $galy_time_table->date =$date;
-                     $galy_time_table->session= $session[0];
+                     $galy_time_table->session= $session;
                      $galy_time_table->subcode = $subcode;
                      $galy_time_table->degree = $degree;
                      $galy_time_table->subject = $subject;
                      $galy_time_table->reg_no = $student->reg_no;
                      $galy_time_table->save();
                  }
-
-                    // echo "date".$date."<br>";
-                    // echo "sssio".$session[0]."<br>";
-                    // echo "subcode".$subcode."<br>";
-                    // echo "degree".$degree."<br>";
-                    // echo "subject".$subject."<br>";
-                
-                    // echo "reg_no".$students[0]->reg_no."<br><br><br>";
-                    
-
                 }
-            //    $student_15[$dept] = $group_students->split(15);
-            //    echo $student_15[$dept][14]."<br>"; 
-            //   echo $dept.'=>'.$group_students->count().'<br>';
+            
             }
         
 
     }
   //  $short_tables= GalyTimeTable::where('date','=',$date)->get()->groupby('hall_number');
   //  return view('hall.create',compact('short_tables'));
-   return $galy_time_table;
-  
-    
-   
+   return $galy_time_table;        
+    }
+    public function createHall(Request $request){
+         /*
+        *each  hall have a 30(records) candidate => (15+15) of them  each dept (or)
+                                                 => (7+8+7+8)  of them each dept
+                            
+        hall_number;
+        date
+        session
+        reg_no
+        degree
+        subcode*/
+        $date = $request->date;
+        $sessions = $request->sessions;
+        
+        foreach($sessions as $session){
+          $first = [];
+          $halls = 0;
+          $i = 1;
+          $a = 1;
+          $total_students = 0;
+           $time_tables = TimeTable::where('date','=',$date)->where('session','=',$session)->get();
+           $subcodes = $time_tables->pluck('subcode');
+           foreach($subcodes as $subcode){
+            $galies = Galy::where('subcode','=',$subcode)->get();
+            $total_students += $galies->count();
+            $halls += $galies->count()/30;
+           }
+          $fraction = $halls - floor($halls);
+         //  if($fraction < 0.5){
+         //    $halls = $halls + 1;
+         //    }
+           foreach($subcodes as $subcode){
+              $galies = Galy::where('subcode','=',$subcode)->get();
+              $depts = $galies->groupby('subject');
+              foreach($depts as $dept=>$students){
+                $students = $students->sortBy('reg_no');
+                foreach($students as $student){
+                     array_push($first,$student);
+                 
+                    
+                 $galy_time_table = new GalyTimeTable();
+                     if($i > round($halls) ){
+                      if($total_students/1.1 > count($first) ){
+                        $i = 1;    
+                         }
+                      }
+                     $galy_time_table->hall_number = $i;
+                     $a++;
+                     if($a > 15){
+                       $i++;
+                       $a = 1;
+                     }
+                     $galy_time_table->date =$date;
+                     $galy_time_table->session= $session;
+                     $galy_time_table->subcode = $subcode;
+                     $galy_time_table->degree = $student->degree;
+                     $galy_time_table->subject = $dept;
+                     $galy_time_table->reg_no = $student->reg_no;
+                     $galy_time_table->save();
+                 
+                }
+
+              }
+           }
+        }
+        return $galy_time_table;
        
-       
-         
     }
    
     public function showDate(){
