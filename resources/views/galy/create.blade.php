@@ -72,6 +72,7 @@
     
     $(document).ready(function(){
         function galiesImport(date,session){
+        
             alert("hi");
         }
     });
