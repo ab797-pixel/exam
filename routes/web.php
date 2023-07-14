@@ -34,7 +34,7 @@ Route::get('time_table', [\App\Http\Controllers\TimeTableController::class,'inde
 Route::post('create_hall/', [\App\Http\Controllers\TimeTableController::class,'createHall'])->name('create_hall');
 Route::get('create_hall/dateGet', [\App\Http\Controllers\TimeTableController::class,'showDate'])->name('create_hall/dateGet');
 
-Route::get('hall/index', [\App\Http\Controllers\GalyTimeTableController::class,'index'])->name('hall');
+Route::get('hall', [\App\Http\Controllers\GalyTimeTableController::class,'index'])->name('hall');
 
 //print DIff types of halls
 Route::get('short_hall/{date}/{session}', [\App\Http\Controllers\GalyTimeTableController::class,'shortHall'])->name('short_hall');
@@ -49,7 +49,7 @@ Route::get('present/{date}/{session}', [\App\Http\Controllers\GalyTimeTableContr
 
 
 //Route::view('entrance_hall/{date}','hall/entrance_hall');
-Route::view('hall','hall/create');
+//Route::view('hall','hall/create');
 
 
 

@@ -12,13 +12,13 @@
     <h1 style="text-align:center;">Gally</h1>
 </div>
 <div class="col-lg-4" style="display:inline-block;">
-<form action="{{ route('import-galy') }}" method="POST" name="importform"
+<form action="{{ route('import-galy') }}" id="galyimport"method="POST" name="importform"
 	  enctype="multipart/form-data">
 		@csrf
 			<label for="file">select galy</label>
 			<input id="file" type="file" name="file"   class="form-control">
 		<div style="margin-top:10px;">
-    <button class="btn btn-success" style="margin-right:30px;" onclick ='galiesImport()'>Import File</button>
+    <button class="btn btn-success" style="margin-right:30px;" >Import File</button>
     <a class="btn btn-info" href="{{ route('export-galy') }}"style="margin-left:30px">Export File</a>  
     </div>	
 	</form>
@@ -70,12 +70,10 @@
 </table>
 <script type="text/javascript">
     
-    $(document).ready(function(){
-        function galiesImport(date,session){
-        
-            alert("hi");
-        }
-    });
+    // $('#galyimport').submit(function(e) {
+    //     e.preventDefault();
+    //   alert('hi');
+    // });
     
 </script>
 @endsection

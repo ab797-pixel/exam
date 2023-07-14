@@ -75,16 +75,18 @@ class GalyTimeTableController extends Controller
     public function studentPresent($date,$session){
         $halls = GalyTimeTable::where('date','=',$date)->where('session','=',$session)->get()->groupby('hall_number');
         foreach($halls as $hall=>$depts){
+           
             $depts=$depts->groupby('subject');
             foreach($depts as $dept=>$students){
-                $present[$hall][$dept]= array(
+                $presents[$hall][$dept]= array(
                     "first" => $students->first(),
                     "last"  => $students->last(),
+                    "count"  =>$students->count(),
                 );
             }
         }
-        return view('hall.present',compact('present','date','session'));
-       //return $present;
+        return view('hall.present',compact('presents','date','session'));
+       //return $presents;
  
         
     }

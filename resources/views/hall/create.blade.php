@@ -22,7 +22,9 @@
         </tr>
         </thead>
         <?php
-        $halls = [];
+      //   if($halls == 'undefined'){
+      //   $halls = [];
+      // }
          ?>
         @foreach($halls as $hall=>$sessions)
           @foreach($sessions as $session)
