@@ -21,11 +21,7 @@
             <th>Action</th>
         </tr>
         </thead>
-        <?php
-      //   if($halls == 'undefined'){
-      //   $halls = [];
-      // }
-         ?>
+       
         @foreach($halls as $hall=>$sessions)
           @foreach($sessions as $session)
         <tr style="text-align:center;">
@@ -65,7 +61,7 @@
     
     
 </table>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $.ajaxSetup({
     headers:{
         'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
@@ -84,6 +80,6 @@ $.ajaxSetup({
         },
     });
    });
-  </script>
+  </script> -->
 
 @endsection

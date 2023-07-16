@@ -8,12 +8,29 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
-<div class="col-lg-4">
+<div class="col-lg-2">
     <h1 style="text-align:center;">Gally</h1>
 </div>
+<div class="col-lg-2">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+   
+
+</div>
 <div class="col-lg-4" style="display:inline-block;">
-<form action="{{ route('import-galy') }}" id="galyimport"method="POST" name="importform"
+<form action="{{ route('import-galy') }}" id="galyimport" method="POST" name="importform"
 	  enctype="multipart/form-data">
+      <!-- <form  id="galyimport" name="importform"
+	  enctype="multipart/form-data"> -->
+      
 		@csrf
 			<label for="file">select galy</label>
 			<input id="file" type="file" name="file"   class="form-control">
@@ -68,12 +85,5 @@
         @endforeach
         </tbody>   
 </table>
-<script type="text/javascript">
-    
-    // $('#galyimport').submit(function(e) {
-    //     e.preventDefault();
-    //   alert('hi');
-    // });
-    
-</script>
+
 @endsection

@@ -9,8 +9,19 @@
         <button class="btn btn-outline-success" style="backgrond-color:aqua;" type="submit">Search</button>
       </form>
     </div>
-<div class="col-lg-4">
+<div class="col-lg-2">
     <h1 style="text-align:center;" id="time">Time Table</h1>
+</div>
+<div class="col-lg-2">
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 </div>
 <div class="col-lg-4" style="display:inline-block;">
 <form action="{{ route('import_time_table') }}" method="POST" name="importform"
@@ -117,7 +128,7 @@
           }
         },
         error: function(err){
-            alert("Click 'Create Hall'");
+           
         },
     });
    });
@@ -148,7 +159,8 @@
           
         },
         error: function(err){
-            alert("Import GALY and TIME_TABLE");
+            alert('IMPORT GALY PROPERLY');
+            console.log(err);
         },
     });
    }

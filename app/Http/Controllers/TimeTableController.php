@@ -18,7 +18,10 @@ class TimeTableController extends Controller
     public function exportTimeTable(){
         return Excel::download(new TimeTablesExport,'time_table.xlsx');
     }
-    public function importTimeTable(){
+    public function importTimeTable(Request $request){
+      $validated = $request->validate([
+        'file' => 'required',
+    ]);
         $file= request()->file('file');
         
         Excel::import(new TimeTablesImport, $file);
@@ -51,7 +54,7 @@ class TimeTableController extends Controller
         degree
         subcode*/
 
-
+        
         $i = 1;
         $a = 1;
         $halls = 0;
@@ -76,13 +79,6 @@ class TimeTableController extends Controller
            $galies = Galy::where('subcode','=',$subcode) 
                  
                   ->get();
-       
-                  
-   
-       
-       
-       
-               
           $degrees= $galies ->groupby('degree');
            
              foreach($degrees as $degree => $depts ){

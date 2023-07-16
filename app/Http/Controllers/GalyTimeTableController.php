@@ -15,7 +15,7 @@ class GalyTimeTableController extends Controller
        
      $dates = GalyTimeTable::pluck('date')->unique();
      $i=0;
-     $halls;
+     $halls = [];
      foreach($dates as $date){
         $sessions = GalyTimeTable::where('date','=',$date)->get()->groupby('session');
         foreach($sessions as $session=>$students){

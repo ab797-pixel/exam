@@ -87,14 +87,9 @@
             <td>Signature of the Chief Superintendent</td>
         </tr>
         </tbody>
-                 
-      
-       
-       
-       
-       
         
-     
+       
+       
         @endforeach
     
 </table> 

@@ -23,16 +23,18 @@ class GalyController extends Controller
     }
 
     public function importGaly(Request $request){
-
-       /* Galy::truncate();
+        $validated = $request->validate([
+            'file' => 'required',
+        ]);
         
-        $galies = '/home/username/galies.xslx';*/
+     
         $file= request()->file('file');
         
         Excel::import(new GaliesImport, $file);
        // Excel::import(new GaliesImport,'.dummy.xlsx','s3',\Maatwebsite\Excel\Excel::XLSX);
-
-       return back()->withStatus('Import Done');
+       $message = "SUCCESSFULLY IMPORTED!";
+      // return view('galy.create',compact('message'));
+      return back();
 
     }
     public function index(){
